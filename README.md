@@ -23,8 +23,8 @@ whether you must register a business.
 ```bash
 npm install
 npx wrangler login
-npx wrangler d1 create income-tracker          # copy database_id into wrangler.toml
-npx wrangler d1 migrations apply income-tracker --remote
+npx wrangler d1 create ai-income-tracker          # copy database_id into wrangler.toml
+npx wrangler d1 migrations apply ai-income-tracker --remote
 npx wrangler secret put INVITE_CODE            # the code you give your friend
 npx wrangler deploy
 ```
@@ -37,7 +37,7 @@ Once both accounts exist you can close registration with
 
 ```bash
 cp .dev.vars.example .dev.vars
-npx wrangler d1 migrations apply income-tracker --local
+npx wrangler d1 migrations apply ai-income-tracker --local
 npx wrangler dev
 ```
 

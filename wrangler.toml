@@ -1,4 +1,4 @@
-name = "income-tracker"
+name = "ai-income-tracker"
 main = "src/worker.js"
 compatibility_date = "2026-10-01"
 
@@ -10,8 +10,8 @@ run_worker_first = ["/api/*"]
 
 [[d1_databases]]
 binding = "DB"
-database_name = "income-tracker"
-database_id = "REPLACE_WITH_YOUR_DATABASE_ID"   # from `npx wrangler d1 create income-tracker`
+database_name = "ai-income-tracker"
+database_id = "cc0dba65-2c0f-4f19-bea8-f771c4863148"
 migrations_dir = "migrations"
 
 # Secret, not set here:  npx wrangler secret put INVITE_CODE
