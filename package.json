@@ -1,0 +1,13 @@
+{
+  "name": "income-tracker",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate": "wrangler d1 migrations apply income-tracker --remote"
+  },
+  "devDependencies": {
+    "wrangler": "^4.155.0"
+  },
+  "private": true
+}

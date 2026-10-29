@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ledger</title>
+  <meta name="theme-color" content="#0f0f0e">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f0f0e'/%3E%3Crect x='8' y='18' width='4' height='7' fill='%23ecebe6'/%3E%3Crect x='14' y='13' width='4' height='12' fill='%23ecebe6'/%3E%3Crect x='20' y='8' width='4' height='17' fill='%23ecebe6'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand"><span class="brand-mark"></span>ledger</div>
+      <div class="topbar-right">
+        <span id="whoami" class="muted mono" hidden></span>
+        <button id="theme-toggle" class="ghost" type="button" aria-label="Toggle theme">◐</button>
+        <button id="logout" class="ghost" type="button" hidden>Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ AUTH ============ -->
+  <main id="auth-view" class="wrap auth" hidden>
+    <div class="auth-card">
+      <h1>Track income under the<br>działalność nierejestrowana limit.</h1>
+      <p class="muted">USD payouts converted at the NBP rate from the business day before each payout.</p>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-auth="login" type="button">Log in</button>
+        <button class="tab" data-auth="register" type="button">Register</button>
+      </div>
+      <form id="auth-form" autocomplete="on">
+        <label>Username<input name="username" autocomplete="username" required minlength="3" maxlength="32"><span id="username-hint" class="field-hint" role="status" hidden></span></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" required minlength="8"></label>
+        <label class="register-only" hidden>Invite code<input name="invite" autocomplete="off"></label>
+        <button class="primary" type="submit" id="auth-submit">Log in</button>
+        <p id="auth-error" class="error" role="alert"></p>
+      </form>
+    </div>
+  </main>
+
+  <!-- ============ APP ============ -->
+  <main id="app-view" class="wrap" hidden>
+
+    <section class="hero" id="hero">
+      <div class="hero-head">
+        <span class="eyebrow" id="hero-label"></span>
+        <span class="status-pill" id="hero-pill"></span>
+      </div>
+      <div class="hero-figure">
+        <span class="big mono" id="hero-used"></span>
+        <span class="muted mono" id="hero-limit"></span>
+      </div>
+      <div class="meter" id="hero-meter"><div class="meter-fill"></div><div class="meter-tick" style="left:80%"></div></div>
+      <div class="stats" id="hero-stats"></div>
+      <p class="hero-msg" id="hero-msg"></p>
+    </section>
+
+    <section class="card" id="entry-card">
+      <div class="section-head">
+        <h2 id="form-title">Add income</h2>
+        <button class="ghost small" id="cancel-edit" type="button" hidden>Cancel edit</button>
+      </div>
+      <form id="entry-form" class="entry-form" novalidate>
+        <label>Payout date<input type="date" name="date" required></label>
+        <label>Platform<input name="platform" list="platforms" required maxlength="40" placeholder="DataAnnotation"></label>
+        <label>Amount (USD)<input name="amount_usd" inputmode="decimal" required placeholder="0.00" autocomplete="off"></label>
+        <label class="note-field">Note<input name="note" maxlength="200" autocomplete="off" placeholder="optional"></label>
+        <button class="primary" type="submit" id="entry-submit">Add</button>
+      </form>
+      <datalist id="platforms"></datalist>
+      <p class="preview mono" id="preview"></p>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2>Overview</h2>
+        <div class="year-tabs" id="year-tabs"></div>
+      </div>
+      <div class="quarters" id="quarters"></div>
+      <div class="table-wrap">
+        <table class="months" id="months">
+          <thead><tr>
+            <th>Month</th><th class="num">Entries</th><th class="num">USD</th><th class="num">PLN</th>
+            <th class="num">Quarter to date</th><th class="num">Year to date</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2>Entries <span class="muted" id="entries-count"></span></h2>
+        <button class="ghost small" id="export" type="button">Export .xlsx</button>
+      </div>
+      <div class="table-wrap">
+        <table class="entries" id="entries">
+          <thead><tr>
+            <th>Payout date</th><th>Platform</th><th class="num">USD</th><th class="num">NBP rate</th><th class="num">PLN</th><th></th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="empty muted" id="entries-empty" hidden>No entries this year yet.</p>
+    </section>
+
+    <footer class="foot muted">
+      Limit = 225% of the minimum wage in force on 1 January, per quarter. Rates: NBP table A, last business day before the payout date (art. 11a ustawy o PIT).
+      Not tax advice — the income is still reported in your annual PIT-36.
+    </footer>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>

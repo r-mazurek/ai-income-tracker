@@ -1,0 +1,18 @@
+name = "income-tracker"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+# Static frontend in ./public; only /api/* hits the Worker code.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "income-tracker"
+database_id = "REPLACE_WITH_YOUR_DATABASE_ID"   # from `npx wrangler d1 create income-tracker`
+migrations_dir = "migrations"
+
+# Secret, not set here:  npx wrangler secret put INVITE_CODE
+# If INVITE_CODE is unset, registration is closed.
